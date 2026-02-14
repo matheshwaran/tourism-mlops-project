@@ -28,7 +28,7 @@ from huggingface_hub import HfApi, hf_hub_download
 def load_data_from_hf():
     """Load train and test data from Hugging Face Hub."""
     hf_token = os.environ.get("HF_TOKEN")
-    repo_id = "Matheshwaran/tourism-dataset"
+    repo_id = "Matheshrangasamy/tourism-dataset"
 
     train_path = hf_hub_download(
         repo_id=repo_id,
@@ -120,7 +120,7 @@ def save_and_register_model(model, feature_names):
     # Upload to Hugging Face Model Hub
     api = HfApi()
     hf_token = os.environ.get("HF_TOKEN")
-    model_repo_id = "Matheshwaran/tourism-model"
+    model_repo_id = "Matheshrangasamy/tourism-model"
 
     # Create model repo if not exists
     api.create_repo(

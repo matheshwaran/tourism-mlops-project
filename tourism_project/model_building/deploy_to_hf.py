@@ -11,7 +11,7 @@ def deploy_to_hf_space():
     """Push deployment files to Hugging Face Space."""
     api = HfApi()
     hf_token = os.environ.get("HF_TOKEN")
-    space_repo_id = "Matheshwaran/tourism-app"
+    space_repo_id = "Matheshrangasamy/tourism-app"
 
     # Create the space if it doesn't exist (Docker SDK)
     api.create_repo(

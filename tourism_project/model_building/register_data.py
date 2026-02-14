@@ -9,7 +9,7 @@ def register_dataset():
     """Upload tourism.csv to Hugging Face Dataset space."""
     api = HfApi()
     hf_token = os.environ.get("HF_TOKEN")
-    repo_id = "Matheshwaran/tourism-dataset"
+    repo_id = "Matheshrangasamy/tourism-dataset"
 
     # Create the dataset repo if it doesn't exist
     api.create_repo(

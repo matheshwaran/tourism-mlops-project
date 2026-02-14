@@ -15,7 +15,7 @@ from huggingface_hub import HfApi, hf_hub_download
 def load_data_from_hf():
     """Load the tourism dataset from Hugging Face Hub."""
     hf_token = os.environ.get("HF_TOKEN")
-    repo_id = "Matheshwaran/tourism-dataset"
+    repo_id = "Matheshrangasamy/tourism-dataset"
 
     file_path = hf_hub_download(
         repo_id=repo_id,
@@ -131,7 +131,7 @@ def upload_splits_to_hf():
     """Upload train and test CSV files to Hugging Face Hub."""
     api = HfApi()
     hf_token = os.environ.get("HF_TOKEN")
-    repo_id = "Matheshwaran/tourism-dataset"
+    repo_id = "Matheshrangasamy/tourism-dataset"
 
     for filename in ["train.csv", "test.csv"]:
         api.upload_file(

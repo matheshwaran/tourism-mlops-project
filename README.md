@@ -53,4 +53,4 @@ The GitHub Actions pipeline has 4 sequential jobs:
 
 ## Live App
 
-🚀 [Tourism Package Predictor](https://huggingface.co/spaces/Matheshwaran/tourism-app)
+🚀 [Tourism Package Predictor](https://huggingface.co/spaces/Matheshrangasamy/tourism-app)

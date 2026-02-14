@@ -18,7 +18,7 @@ st.set_page_config(
 @st.cache_resource
 def load_model():
     """Load the trained model from Hugging Face Model Hub."""
-    model_repo_id = "Matheshwaran/tourism-model"
+    model_repo_id = "Matheshrangasamy/tourism-model"
 
     model_path = hf_hub_download(
         repo_id=model_repo_id,
