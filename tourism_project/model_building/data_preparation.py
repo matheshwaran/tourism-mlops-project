@@ -66,21 +66,16 @@ def clean_data(df):
     )
 
     occupation_map = {
-        "Salaried": 0,
-        "Small Business": 1,
-        "Large Business": 2,
-        "Free Lancer": 3,
+        "Salaried": 0, "Small Business": 1,
+        "Large Business": 2, "Free Lancer": 3,
     }
     df["Occupation"] = df["Occupation"].map(occupation_map)
 
     df["Gender"] = df["Gender"].map({"Male": 0, "Female": 1})
 
     product_map = {
-        "Basic": 0,
-        "Standard": 1,
-        "Deluxe": 2,
-        "Super Deluxe": 3,
-        "King": 4,
+        "Basic": 0, "Standard": 1, "Deluxe": 2,
+        "Super Deluxe": 3, "King": 4,
     }
     df["ProductPitched"] = df["ProductPitched"].map(product_map)
 
@@ -88,11 +83,8 @@ def clean_data(df):
     df["MaritalStatus"] = df["MaritalStatus"].map(marital_map)
 
     designation_map = {
-        "Executive": 0,
-        "Manager": 1,
-        "Senior Manager": 2,
-        "AVP": 3,
-        "VP": 4,
+        "Executive": 0, "Manager": 1, "Senior Manager": 2,
+        "AVP": 3, "VP": 4,
     }
     df["Designation"] = df["Designation"].map(designation_map)
 

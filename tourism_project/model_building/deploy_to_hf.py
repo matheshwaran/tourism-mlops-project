@@ -22,7 +22,7 @@ def deploy_to_hf_space():
         token=hf_token,
     )
 
-    # Files to upload
+    # Files to upload to the HF Space
     deployment_files = {
         "tourism_project/deployment/Dockerfile": "Dockerfile",
         "tourism_project/deployment/app.py": "app.py",
@@ -42,9 +42,7 @@ def deploy_to_hf_space():
         else:
             print(f"WARNING: {local_path} not found!")
 
-    print(
-        f"\nDeployment complete! Visit: https://huggingface.co/spaces/{space_repo_id}"
-    )
+    print(f"\nDeployment complete! Visit: https://huggingface.co/spaces/{space_repo_id}")
 
 
 if __name__ == "__main__":

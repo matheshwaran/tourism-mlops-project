@@ -1,5 +1,6 @@
 """
 Register the tourism dataset on Hugging Face Hub.
+This script uploads tourism.csv to the Hugging Face Dataset space.
 """
 import os
 from huggingface_hub import HfApi

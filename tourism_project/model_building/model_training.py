@@ -15,12 +15,8 @@ import mlflow.sklearn
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import (
-    accuracy_score,
-    precision_score,
-    recall_score,
-    f1_score,
-    roc_auc_score,
-    classification_report,
+    accuracy_score, precision_score, recall_score,
+    f1_score, roc_auc_score, classification_report,
 )
 from huggingface_hub import HfApi, hf_hub_download
 
@@ -31,16 +27,12 @@ def load_data_from_hf():
     repo_id = "Matheshrangasamy/tourism-dataset"
 
     train_path = hf_hub_download(
-        repo_id=repo_id,
-        filename="train.csv",
-        repo_type="dataset",
-        token=hf_token,
+        repo_id=repo_id, filename="train.csv",
+        repo_type="dataset", token=hf_token,
     )
     test_path = hf_hub_download(
-        repo_id=repo_id,
-        filename="test.csv",
-        repo_type="dataset",
-        token=hf_token,
+        repo_id=repo_id, filename="test.csv",
+        repo_type="dataset", token=hf_token,
     )
 
     train_df = pd.read_csv(train_path)
@@ -55,8 +47,10 @@ def train_and_tune_model(X_train, y_train):
     Define model and hyperparameters, perform GridSearchCV tuning.
     Using Gradient Boosting Classifier.
     """
+    # Define the model
     model = GradientBoostingClassifier(random_state=42)
 
+    # Define hyperparameter grid
     param_grid = {
         "n_estimators": [100, 200],
         "max_depth": [3, 5],
@@ -64,13 +58,10 @@ def train_and_tune_model(X_train, y_train):
         "subsample": [0.8, 1.0],
     }
 
+    # Perform Grid Search with Cross-Validation
     grid_search = GridSearchCV(
-        estimator=model,
-        param_grid=param_grid,
-        cv=3,
-        scoring="f1",
-        n_jobs=-1,
-        verbose=1,
+        estimator=model, param_grid=param_grid,
+        cv=3, scoring="f1", n_jobs=-1, verbose=1,
     )
 
     grid_search.fit(X_train, y_train)
@@ -124,28 +115,22 @@ def save_and_register_model(model, feature_names):
 
     # Create model repo if not exists
     api.create_repo(
-        repo_id=model_repo_id,
-        repo_type="model",
-        exist_ok=True,
-        token=hf_token,
+        repo_id=model_repo_id, repo_type="model",
+        exist_ok=True, token=hf_token,
     )
 
     # Upload model file
     api.upload_file(
         path_or_fileobj=model_path,
         path_in_repo="best_model.joblib",
-        repo_id=model_repo_id,
-        repo_type="model",
-        token=hf_token,
+        repo_id=model_repo_id, repo_type="model", token=hf_token,
     )
 
     # Upload feature names
     api.upload_file(
         path_or_fileobj=feature_path,
         path_in_repo="feature_names.joblib",
-        repo_id=model_repo_id,
-        repo_type="model",
-        token=hf_token,
+        repo_id=model_repo_id, repo_type="model", token=hf_token,
     )
 
     print(f"Model registered on HF Hub: {model_repo_id}")

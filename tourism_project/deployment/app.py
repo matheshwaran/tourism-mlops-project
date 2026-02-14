@@ -21,15 +21,10 @@ def load_model():
     model_repo_id = "Matheshrangasamy/tourism-model"
 
     model_path = hf_hub_download(
-        repo_id=model_repo_id,
-        filename="best_model.joblib",
-        repo_type="model",
+        repo_id=model_repo_id, filename="best_model.joblib", repo_type="model",
     )
-
     feature_path = hf_hub_download(
-        repo_id=model_repo_id,
-        filename="feature_names.joblib",
-        repo_type="model",
+        repo_id=model_repo_id, filename="feature_names.joblib", repo_type="model",
     )
 
     model = joblib.load(model_path)
@@ -42,94 +37,65 @@ model, feature_names = load_model()
 
 # ---- App Title ----
 st.title("✈️ Tourism Wellness Package - Purchase Prediction")
-st.markdown(
-    "Predict whether a customer will purchase the **Wellness Tourism Package**."
-)
+st.markdown("Predict whether a customer will purchase the **Wellness Tourism Package**.")
 st.markdown("---")
 
 # ---- Sidebar Inputs ----
 st.sidebar.header("Customer Details")
 
 age = st.sidebar.slider("Age", 18, 65, 35)
-type_of_contact = st.sidebar.selectbox(
-    "Type of Contact", ["Self Enquiry", "Company Invited"]
-)
+type_of_contact = st.sidebar.selectbox("Type of Contact", ["Self Enquiry", "Company Invited"])
 city_tier = st.sidebar.selectbox("City Tier", [1, 2, 3])
 duration_of_pitch = st.sidebar.slider("Duration of Pitch (minutes)", 5, 40, 15)
-occupation = st.sidebar.selectbox(
-    "Occupation", ["Salaried", "Small Business", "Large Business", "Free Lancer"]
-)
+occupation = st.sidebar.selectbox("Occupation", ["Salaried", "Small Business", "Large Business", "Free Lancer"])
 gender = st.sidebar.selectbox("Gender", ["Male", "Female"])
 num_persons_visiting = st.sidebar.slider("Number of Persons Visiting", 1, 5, 3)
 num_followups = st.sidebar.slider("Number of Followups", 1, 6, 3)
-product_pitched = st.sidebar.selectbox(
-    "Product Pitched", ["Basic", "Standard", "Deluxe", "Super Deluxe", "King"]
-)
+product_pitched = st.sidebar.selectbox("Product Pitched", ["Basic", "Standard", "Deluxe", "Super Deluxe", "King"])
 preferred_property_star = st.sidebar.slider("Preferred Property Star", 3, 5, 3)
-marital_status = st.sidebar.selectbox(
-    "Marital Status", ["Single", "Married", "Divorced", "Unmarried"]
-)
+marital_status = st.sidebar.selectbox("Marital Status", ["Single", "Married", "Divorced", "Unmarried"])
 num_trips = st.sidebar.slider("Number of Trips (Annual)", 1, 10, 3)
-passport = st.sidebar.selectbox(
-    "Has Passport?", [0, 1], format_func=lambda x: "Yes" if x == 1 else "No"
-)
+passport = st.sidebar.selectbox("Has Passport?", [0, 1], format_func=lambda x: "Yes" if x == 1 else "No")
 pitch_satisfaction_score = st.sidebar.slider("Pitch Satisfaction Score", 1, 5, 3)
-own_car = st.sidebar.selectbox(
-    "Owns Car?", [0, 1], format_func=lambda x: "Yes" if x == 1 else "No"
-)
+own_car = st.sidebar.selectbox("Owns Car?", [0, 1], format_func=lambda x: "Yes" if x == 1 else "No")
 num_children_visiting = st.sidebar.slider("Number of Children Visiting", 0, 3, 1)
-designation = st.sidebar.selectbox(
-    "Designation", ["Executive", "Manager", "Senior Manager", "AVP", "VP"]
-)
+designation = st.sidebar.selectbox("Designation", ["Executive", "Manager", "Senior Manager", "AVP", "VP"])
 monthly_income = st.sidebar.slider("Monthly Income", 10000, 40000, 20000)
 
 # ---- Encode inputs ----
 type_of_contact_enc = 0 if type_of_contact == "Self Enquiry" else 1
-occupation_map = {
-    "Salaried": 0,
-    "Small Business": 1,
-    "Large Business": 2,
-    "Free Lancer": 3,
-}
+occupation_map = {"Salaried": 0, "Small Business": 1, "Large Business": 2, "Free Lancer": 3}
 gender_enc = 0 if gender == "Male" else 1
 product_map = {"Basic": 0, "Standard": 1, "Deluxe": 2, "Super Deluxe": 3, "King": 4}
 marital_map = {"Single": 0, "Married": 1, "Divorced": 2, "Unmarried": 3}
-designation_map = {
-    "Executive": 0,
-    "Manager": 1,
-    "Senior Manager": 2,
-    "AVP": 3,
-    "VP": 4,
-}
+designation_map = {"Executive": 0, "Manager": 1, "Senior Manager": 2, "AVP": 3, "VP": 4}
 
 # ---- Build input dataframe ----
-input_data = pd.DataFrame(
-    {
-        "Age": [age],
-        "TypeofContact": [type_of_contact_enc],
-        "CityTier": [city_tier],
-        "DurationOfPitch": [duration_of_pitch],
-        "Occupation": [occupation_map[occupation]],
-        "Gender": [gender_enc],
-        "NumberOfPersonVisiting": [num_persons_visiting],
-        "NumberOfFollowups": [num_followups],
-        "ProductPitched": [product_map[product_pitched]],
-        "PreferredPropertyStar": [preferred_property_star],
-        "MaritalStatus": [marital_map[marital_status]],
-        "NumberOfTrips": [num_trips],
-        "Passport": [passport],
-        "PitchSatisfactionScore": [pitch_satisfaction_score],
-        "OwnCar": [own_car],
-        "NumberOfChildrenVisiting": [num_children_visiting],
-        "Designation": [designation_map[designation]],
-        "MonthlyIncome": [monthly_income],
-    }
-)
+input_data = pd.DataFrame({
+    "Age": [age],
+    "TypeofContact": [type_of_contact_enc],
+    "CityTier": [city_tier],
+    "DurationOfPitch": [duration_of_pitch],
+    "Occupation": [occupation_map[occupation]],
+    "Gender": [gender_enc],
+    "NumberOfPersonVisiting": [num_persons_visiting],
+    "NumberOfFollowups": [num_followups],
+    "ProductPitched": [product_map[product_pitched]],
+    "PreferredPropertyStar": [preferred_property_star],
+    "MaritalStatus": [marital_map[marital_status]],
+    "NumberOfTrips": [num_trips],
+    "Passport": [passport],
+    "PitchSatisfactionScore": [pitch_satisfaction_score],
+    "OwnCar": [own_car],
+    "NumberOfChildrenVisiting": [num_children_visiting],
+    "Designation": [designation_map[designation]],
+    "MonthlyIncome": [monthly_income],
+})
 
 # Ensure column order matches training
 input_data = input_data[feature_names]
 
-# ---- Prediction ----
+# ---- Display Input Summary ----
 st.subheader("Input Summary")
 col1, col2, col3 = st.columns(3)
 with col1:
@@ -150,6 +116,7 @@ with col3:
 
 st.markdown("---")
 
+# ---- Prediction ----
 if st.button("🔮 Predict Purchase Likelihood", type="primary"):
     prediction = model.predict(input_data)[0]
     probability = model.predict_proba(input_data)[0]
@@ -158,19 +125,13 @@ if st.button("🔮 Predict Purchase Likelihood", type="primary"):
 
     with col_left:
         if prediction == 1:
-            st.success(
-                "✅ **Customer is LIKELY to purchase** the Wellness Tourism Package!"
-            )
+            st.success("✅ **Customer is LIKELY to purchase** the Wellness Tourism Package!")
         else:
-            st.warning(
-                "❌ **Customer is UNLIKELY to purchase** the Wellness Tourism Package."
-            )
+            st.warning("❌ **Customer is UNLIKELY to purchase** the Wellness Tourism Package.")
 
     with col_right:
         st.metric("Purchase Probability", f"{probability[1]*100:.1f}%")
         st.metric("No-Purchase Probability", f"{probability[0]*100:.1f}%")
 
 st.markdown("---")
-st.caption(
-    "Built with Streamlit | Model: Gradient Boosting Classifier | Data: Tourism Customer Dataset"
-)
+st.caption("Built with Streamlit | Model: Gradient Boosting Classifier | Data: Tourism Customer Dataset")
